@@ -9,6 +9,6 @@
 	5. 查找box，根据box的类型返回box，如果有多个，则只返回匹配的第一个box：Box* mm_get_first_box_by_name(BoxTree* box_tree, char* box_name);    
 	6. 遍历box树的所有box：void mm_traverse_box(BoxTree* box_tree);  
 	7. 释放所有内容：void mm_free_boxtree(BoxTree* box_tree);    
-3. 注意：目前除了ftype box有较为详细的解析外，其它box仅作粗略解析，如果想较为完整的解析MP4文件，请自行定义。  
+3. 注意：目前除了ftype box有较为详细的解析外，其它box仅作粗略解析，如果想较为完整的解析MP4文件，请自行扩展。  
 
 ## PNG图像解析
