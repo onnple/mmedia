@@ -141,9 +141,11 @@
   <ItemGroup>
     <ClCompile Include="mmedia.cpp" />
     <ClCompile Include="mp4.c" />
+    <ClCompile Include="png.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mp4.h" />
+    <ClInclude Include="png.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

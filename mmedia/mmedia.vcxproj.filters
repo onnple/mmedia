@@ -21,9 +21,15 @@
     <ClCompile Include="mp4.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="png.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mp4.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="png.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
