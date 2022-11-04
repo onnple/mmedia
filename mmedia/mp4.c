@@ -1,34 +1,20 @@
 #pragma warning(disable : 4996)
 #include "mp4.h"
+#include "util.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>;
-
-static int from_hex4(int n) {
-	return ((n & 0x000000ff) << 24) | ((n & 0x0000ff00) << 8)
-		| ((n & 0x00ff0000) >> 8) | ((n & 0xff000000) >> 24);
-}
-
-static char* new_str(int len) {
-	char* str = malloc((len + 1) * sizeof(char));
-	if (!str) {
-		printf("alloc type error.");
-		return NULL;
-	}
-	str[len] = '\0';
-	return str;
-}
+#include <string.h>
 
 BoxTree* mm_alloc_boxtree() {
 	BoxTree* box_tree = (BoxTree*)malloc(sizeof(BoxTree));
 	if (box_tree == NULL) {
-		printf("malloc box_tree NULL.");
+		printf("malloc box_tree NULL.\n");
 		return NULL;
 	}
 	box_tree->size = 0;
 	Box* root = mm_alloc_box();
 	if (root == NULL) {
-		printf("alloc root box NULL.");
+		printf("alloc root box NULL.\n");
 		free(box_tree);
 		return NULL;
 	}
@@ -40,13 +26,13 @@ BoxTree* mm_alloc_boxtree() {
 Box* mm_alloc_box() {
 	Box* box = (Box*)malloc(sizeof(Box));
 	if (box == NULL) {
-		printf("alloc box NULL.");
+		printf("alloc box NULL.\n");
 		return NULL;
 	}
 
 	Header* header = (Header*)malloc(sizeof(Header));
 	if (header == NULL) {
-		printf("alloc header NULL.");
+		printf("alloc header NULL.\n");
 		free(box);
 		return NULL;
 	}
@@ -67,7 +53,7 @@ Box* mm_alloc_box() {
 **/
 static int mm_resolve_box(FILE *fp, BoxTree* box_tree, Box* root) {
 	if (!fp || !root || !box_tree) {
-		printf("empty input error.");
+		printf("empty input error.\n");
 		return -1;
 	}
 	if (!root->has_children)
@@ -96,7 +82,7 @@ static int mm_resolve_box(FILE *fp, BoxTree* box_tree, Box* root) {
 		fseek(fp, p, SEEK_SET);
 		Box* root_box = mm_alloc_box();
 		if (!root_box) {
-			printf("alloc box error.");
+			printf("alloc box error.\n");
 			return -1;
 		}
 
@@ -147,7 +133,7 @@ static int mm_resolve_box(FILE *fp, BoxTree* box_tree, Box* root) {
 int mm_find_stream_info(BoxTree* box_tree, const char* file_path) {
 	FILE* fp = fopen(file_path, "rb");
 	if (!fp) {
-		printf("read file error.");
+		printf("read file error.\n");
 		return -1;
 	}
 
@@ -160,7 +146,7 @@ int mm_find_stream_info(BoxTree* box_tree, const char* file_path) {
 	while (p < f_size) {
 		Box* root_box = mm_alloc_box();
 		if (!root_box) {
-			printf("alloc box error.");
+			printf("alloc box error.\n");
 			return -1;
 		}
 
@@ -252,7 +238,7 @@ int mm_find_stream_info(BoxTree* box_tree, const char* file_path) {
 int mm_find_stream_info_simple(BoxTree* box_tree, const char* file_path) {
 	FILE* fp = fopen(file_path, "rb");
 	if (!fp) {
-		printf("read file error.");
+		printf("read file error.\n");
 		return -1;
 	}
 	mm_resolve_box(fp, box_tree, box_tree->root);
@@ -280,7 +266,7 @@ static Box* _get_first_box_by_name(Box* root, const char* name) {
 // 根据box名称查找box
 Box* mm_get_first_box_by_name(BoxTree* box_tree, char* box_name) {
 	if (!box_tree || box_tree->size == 0 || !box_tree->root || !box_name) {
-		printf("empty input error.");
+		printf("empty input error.\n");
 		return;
 	}
 	Box* root = box_tree->root;
@@ -319,7 +305,7 @@ static void _traverse_box(Box* root) {
 // DFS
 void mm_traverse_box(BoxTree* box_tree) {
 	if (!box_tree || box_tree->size == 0 || !box_tree->root) {
-		printf("empty box tree");
+		printf("empty box tree\n");
 		return;
 	}
 	Box* root = box_tree->root;

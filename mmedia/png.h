@@ -27,17 +27,26 @@ typedef struct PLTEChunk {
 
 // 图像数据块：这里不做解析，忽略，直接使用Chunk
 typedef struct IDATChunk {
-
+	char data;
 } IDATChunk;
 
 // 文件结束数据块：数据域为空，可不用该结构体，这里不使用
 typedef struct IENDChunk {
-
+	char empty;
 } IENDChunk;
 
 // PNG文件结构
 typedef struct PNG {
-	char* signature;  // 8字节PNG标识，读取和验证：89 50 4E 47 0D 0A 1A 0A
-	Chunk* chunk_list;  // PNG文件中的所有数据块
+	char is_png;  // 8字节PNG标识，读取和验证：89 50 4E 47 0D 0A 1A 0A
+	Chunk** chunk_list;  // PNG文件中的所有数据块
 	int size;  // chunk的数量
 } PNG;
+
+PNG* png_alloc();  // 创建一个PNG结构体
+Chunk* png_alloc_chunk();  // 创建一个Chunk数据块结构体
+IHDRChunk* png_alloc_ihdr_chunk();  // 创建一个IHDRChunk
+PLTEChunk* png_alloc_plte_chunk();  // 创建一个PLTEChunk
+
+int png_find_chunk_info(PNG* png, const char* file_path);  // 解析所有Chunk
+void png_traverse_chunk(PNG* png);  // 遍历chunk
+void png_free_png(PNG* png);  // 释放所有内容

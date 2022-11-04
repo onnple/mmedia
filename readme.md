@@ -12,3 +12,13 @@
 3. 注意：目前除了ftype box有较为详细的解析外，其它box仅作粗略解析，如果想较为完整的解析MP4文件，请自行扩展。  
 
 ## PNG图像解析
+1. PNG文件表示数据结构：PNG
+2. 所有操作函数或算法：   
+	1. 创建一个PNG结构体：PNG* png_alloc();
+	2. 创建一个Chunk数据块结构体：Chunk* png_alloc_chunk();
+	3. 创建一个IHDRChunk：IHDRChunk* png_alloc_ihdr_chunk();
+	4. 创建一个PLTEChunk：PLTEChunk* png_alloc_plte_chunk();
+	5. 解析所有Chunk：int png_find_chunk_info(PNG* png, const char* file_path); 
+	6. 遍历chunk：void png_traverse_chunk(PNG* png);
+	7. 释放所有内容：void png_free_png(PNG* png);  
+3. 注意：目前仅仅简单解析数据块的基本内容，如需更详细的解析，可参考PNG文件规范自行重构代码。

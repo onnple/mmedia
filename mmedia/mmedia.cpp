@@ -2,11 +2,12 @@
 
 extern "C" {
 #include "mp4.h"
+#include "png.h"
 }
 
 // 测试MP4文件解析
 static void test_mp4() {
-    const char* file_path = "F:/迅雷下载/Gangs.of.London.S02E01.1080p.WEBRip.x265-RARBG.chs.eng.mp4";
+    const char* file_path = "F:/迅雷下载/万物生灵.All.Creatures.Great.and.Small.S02E06.1080p.H265-NEW字幕组.mp4";
 
     BoxTree* box_tree = mm_alloc_boxtree();
     if (!box_tree) {
@@ -53,13 +54,16 @@ static void test_color() {
 
 // 测试PNG图像解析
 static void test_png() {
-    
+    PNG* png = png_alloc();
+    png_find_chunk_info(png, "C:/Users/Administrator/Desktop/pro/test.png");
+    png_traverse_chunk(png);
+    png_free_png(png);
 }
 
 int main() {
     //test_mp4();
     //test_cpu_endian();
-    test_color();
+    //test_color();
     test_png();
     return 0;
 }
